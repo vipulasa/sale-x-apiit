@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Order;
 use App\Models\User;
-use App\Models\VehicleAddons;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class VehicleAddonsPolicy
+class OrderPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class VehicleAddonsPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\VehicleAddons  $vehicleAddons
+     * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, VehicleAddons $vehicleAddons)
+    public function view(User $user, Order $order)
     {
         //
     }
@@ -48,10 +48,10 @@ class VehicleAddonsPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\VehicleAddons  $vehicleAddons
+     * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, VehicleAddons $vehicleAddons)
+    public function update(User $user, Order $order)
     {
         //
     }
@@ -60,10 +60,10 @@ class VehicleAddonsPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\VehicleAddons  $vehicleAddons
+     * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, VehicleAddons $vehicleAddons)
+    public function delete(User $user, Order $order)
     {
         //
     }
@@ -72,10 +72,10 @@ class VehicleAddonsPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\VehicleAddons  $vehicleAddons
+     * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, VehicleAddons $vehicleAddons)
+    public function restore(User $user, Order $order)
     {
         //
     }
@@ -84,10 +84,10 @@ class VehicleAddonsPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\VehicleAddons  $vehicleAddons
+     * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, VehicleAddons $vehicleAddons)
+    public function forceDelete(User $user, Order $order)
     {
         //
     }
