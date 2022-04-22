@@ -48,7 +48,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <a class="dropdown-item" href="#">Users</a>
+                                        <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                                     </li>
                                 </ul>
                             </li>
