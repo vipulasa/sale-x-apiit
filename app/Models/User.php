@@ -39,8 +39,6 @@ class User extends Authenticatable
         'county',       // LK
         'phone',
         'mobile',
-
-
     ];
 
     /**
