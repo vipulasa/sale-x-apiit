@@ -21,7 +21,26 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'       // 'admin' or 'customer'
+        'role',         // 'admin' or 'customer'
+
+        // Personal Information
+        'title',        // 'mr', 'mrs', 'miss', 'dr', 'prof', 'etc'
+        'first_name',
+        'last_name',
+        'gender',       // 'male', 'female'
+        'birthday',
+        'bio',
+
+        // Address
+        'address_1',
+        'address_2',
+        'city',
+        'postcode',
+        'county',       // LK
+        'phone',
+        'mobile',
+
+
     ];
 
     /**
