@@ -61,7 +61,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', []);
+        return view('users.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -73,7 +75,32 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
+       $validated = $request->validate([
+            "name" => "required|string|max:255",
+            "email" => "required|string|email|max:255",
+            "role" => "required",
+            "title" => "required",
+            "first_name" => "required|string|max:255",
+            "last_name" => "required|string|max:255",
+            "gender" => "required",
+            "birthday" => "nullable",
+            "bio" => "nullable",
+            "address_1" => "required|string",
+            "address_2" => "nullable",
+            "city" => "required|string|max:255",
+            "postcode" => "required|string|max:255",
+            "county" => "required|string|max:255",
+            "phone" => "nullable",
+            "mobile" => "required|string|max:255",
+        ]);
+
+
+        // update user object
+        $user->update($validated);
+
+        // redirect to user page
+        return redirect()->route('users.index');
     }
 
     /**
