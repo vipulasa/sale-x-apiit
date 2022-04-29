@@ -24,7 +24,7 @@ class User extends Authenticatable
         'role',         // 'admin' or 'customer'
 
         // Personal Information
-        'title',        // 'mr', 'mrs', 'miss', 'dr', 'prof', 'etc'
+        'title',        // ['mr', 'mrs', 'miss', 'dr', 'prof', 'etc']
         'first_name',
         'last_name',
         'gender',       // 'male', 'female'
