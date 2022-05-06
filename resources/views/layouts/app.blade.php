@@ -20,6 +20,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -78,8 +80,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -94,6 +97,17 @@
                 </div>
             </div>
         </nav>
+
+        @if (session()->has('success'))
+            <div class="container mt-4">
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <div>
+                        <i class="ri-check-double-line"></i>
+                        {{ session()->get('success') }}
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <main class="py-4">
             @yield('content')

@@ -80,14 +80,14 @@
                                 <div class="col-6">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gender" id="gender-male"
-                                            value="male" {{ $user->title == 'male' ? 'checked' : '' }}>
+                                            value="male" {{ $user->gender == 'male' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender-male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gender" id="gender-female"
-                                            value="female" {{ $user->title == 'female' ? 'checked' : '' }}>
+                                            value="female" {{ $user->gender == 'female' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender-female">
                                             Female
                                         </label>

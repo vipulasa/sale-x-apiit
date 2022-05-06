@@ -99,6 +99,9 @@ class UserController extends Controller
         // update user object
         $user->update($validated);
 
+        // set the success message to the session
+        session()->flash('success', 'User updated successfully');
+
         // redirect to user page
         return redirect()->route('users.index');
     }
