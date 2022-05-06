@@ -67,7 +67,7 @@
                                 <div class="col-md-12 pt-3">
                                     <label for="role" class="form-label">User Role</label>
                                     <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
-                                        <option>Select</option>
+                                        <option value="">Select</option>
                                         <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>
                                             Admin
                                         </option>

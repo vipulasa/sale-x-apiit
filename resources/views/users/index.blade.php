@@ -4,6 +4,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <a href="{{  route('users.create') }}" class="btn btn-primary mt-4 mb-4">
+                    Add User
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <table class="table bg-white table-striped">
                     <thead>
                         <tr>
