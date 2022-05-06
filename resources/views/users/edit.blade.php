@@ -5,7 +5,6 @@
         <div class="row">
             <div class="bg-white col p-4 rounded rounded-2 col-md-8">
                 <form class="row g-3" method="POST" action="{{ route('users.update', $user->id) }}">
-
                     @method('PUT')
                     @csrf
 
@@ -260,6 +259,18 @@
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form action="{{ route('users.destroy', $user->id) }}"
+                    method="POST" id="delete-{{ $user->id }}-user">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button"
+                            class="btn btn-danger"
+                            onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? document.getElementById('delete-{{ $user->id }}-user').submit() : null">
+                        Delete
+                    </button>
                 </form>
             </div>
         </div>

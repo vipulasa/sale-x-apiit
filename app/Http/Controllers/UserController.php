@@ -153,6 +153,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        // delete user
+        $user->delete();
+
+        // set the success message to the session
+        session()->flash('success', 'User deleted successfully');
+
+        // redirect to user page
+        return redirect()->route('users.index');
     }
 }
