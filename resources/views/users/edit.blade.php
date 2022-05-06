@@ -38,14 +38,41 @@
                                 </div>
                             </div>
 
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" />
+                                    <div id="passwordHelp" class="form-text">Password</div>
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                    <input type="password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation"
+                                        name="password_confirmation" />
+                                    @error('password_confirmation')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12 pt-3">
                                     <label for="role" class="form-label">User Role</label>
                                     <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
                                         <option>Select</option>
-                                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>
+                                            Admin
                                         </option>
-                                        <option value="customer" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>
+                                        <option value="customer"
+                                            {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>
                                             Customer</option>
                                     </select>
                                     @error('role')
@@ -171,8 +198,8 @@
                                 </div>
                                 <div class="col-6">
                                     <label for="address_2" class="form-label">Address 2</label>
-                                    <input type="text" value="{{ old('address_2', $user->address_2) }}" class="form-control"
-                                        id="address_2" name="address_2" />
+                                    <input type="text" value="{{ old('address_2', $user->address_2) }}"
+                                        class="form-control" id="address_2" name="address_2" />
                                     <div id="Help" class="form-text">Address 2</div>
                                 </div>
                             </div>
@@ -180,8 +207,8 @@
                             <div class="row pt-3">
                                 <div class="col-6">
                                     <label for="city" class="form-label">City</label>
-                                    <input type="text" value="{{ old('city', $user->city) }}" class="form-control @error('city') is-invalid @enderror" id="city"
-                                        name="city" />
+                                    <input type="text" value="{{ old('city', $user->city) }}"
+                                        class="form-control @error('city') is-invalid @enderror" id="city" name="city" />
                                     <div id="cityHelp" class="form-text">User City</div>
                                     @error('city')
                                         <div class="invalid-feedback">
@@ -191,7 +218,8 @@
                                 </div>
                                 <div class="col-6">
                                     <label for="postcode" class="form-label">Post Code</label>
-                                    <input type="text" value="{{ old('postcode', $user->postcode) }}" class="form-control @error('postcode') is-invalid @enderror" id="postcode"
+                                    <input type="text" value="{{ old('postcode', $user->postcode) }}"
+                                        class="form-control @error('postcode') is-invalid @enderror" id="postcode"
                                         name="postcode" />
                                     <div id="postcodeHelp" class="form-text">User Post Code</div>
                                     @error('postcode')
@@ -207,13 +235,14 @@
                             <div class="row pt-3">
                                 <div class="col-6">
                                     <label for="phone" class="form-label">Phone</label>
-                                    <input type="text" value="{{ old('phone', $user->phone) }}" class="form-control" id="phone"
-                                        name="phone" />
+                                    <input type="text" value="{{ old('phone', $user->phone) }}" class="form-control"
+                                        id="phone" name="phone" />
                                     <div id="phoneHelp" class="form-text"></div>
                                 </div>
                                 <div class="col-6">
                                     <label for="mobile" class="form-label">Mobile</label>
-                                    <input type="text" value="{{ old('mobile', $user->mobile) }}" class="form-control @error('mobile') is-invalid @enderror" id="mobile"
+                                    <input type="text" value="{{ old('mobile', $user->mobile) }}"
+                                        class="form-control @error('mobile') is-invalid @enderror" id="mobile"
                                         name="mobile" />
                                     <div id="mobileHelp" class="form-text"></div>
                                     @error('mobile')
