@@ -49,8 +49,54 @@
                                     Adminstration
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                    <li class="text-black-50 ps-3">Authentication</li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="text-black-50 ps-3">Product</li>
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('manufacturers.index') }}">Manufacturers</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('vehicle-models.index') }}">Models</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('vehicle-addons.index') }}">Addons</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('vehicles.index') }}">Vehicles</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('spareparts.index') }}">Spareparts</a>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="text-black-50 ps-3">E-Commerce</li>
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('promotions.index') }}">Promotions</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('stores.index') }}">Stores</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('delivery-methods.index') }}">Delivery Methods</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('orders.index') }}">Orders</a>
                                     </li>
                                 </ul>
                             </li>
