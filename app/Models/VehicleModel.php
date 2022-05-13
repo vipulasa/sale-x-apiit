@@ -22,6 +22,7 @@ class VehicleModel extends Model
         'is_active'
     ];
 
+    // Vehicle model belongs to a manufacturer
     public function manufacturer(){
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
     }
