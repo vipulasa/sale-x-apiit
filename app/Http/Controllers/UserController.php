@@ -61,6 +61,7 @@ class UserController extends Controller
             "county" => "required|string|max:255",
             "phone" => "nullable",
             "mobile" => "required|string|max:255",
+            "avatar" => "nullable|image|mimes:jpeg,png,jpg",
         ]);
 
         // hash the user password
@@ -143,6 +144,7 @@ class UserController extends Controller
             "county" => "required|string|max:255",
             "phone" => "nullable",
             "mobile" => "required|string|max:255",
+            "avatar" => "nullable|image|mimes:jpeg,png,jpg",
         ]);
 
         // remove the password if it's null
