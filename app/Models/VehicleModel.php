@@ -21,4 +21,8 @@ class VehicleModel extends Model
         'image',
         'is_active'
     ];
+
+    public function manufacturer(){
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+    }
 }

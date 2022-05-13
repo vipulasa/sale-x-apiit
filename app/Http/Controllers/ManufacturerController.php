@@ -15,7 +15,9 @@ class ManufacturerController extends Controller
      */
     public function index()
     {
-        //
+        return view('manufacturer.index', [
+            'manufacturers' => Manufacturer::paginate(),
+        ]);
     }
 
     /**
@@ -47,7 +49,9 @@ class ManufacturerController extends Controller
      */
     public function show(Manufacturer $manufacturer)
     {
-        //
+        return view('manufacturer.show', [
+            'manufacturer' => $manufacturer,
+        ]);
     }
 
     /**
@@ -81,6 +85,13 @@ class ManufacturerController extends Controller
      */
     public function destroy(Manufacturer $manufacturer)
     {
-        //
+        // delete user
+        $manufacturer->delete();
+
+        // set the success message to the session
+        session()->flash('success', 'Manufacturer deleted successfully');
+
+        // redirect to user page
+        return redirect()->route('manufacturers.index');
     }
 }

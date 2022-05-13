@@ -20,4 +20,8 @@ class Manufacturer extends Model
         'image',
         'is_active'
     ];
+
+    public function vehicleModels(){
+        return $this->hasMany(VehicleModel::class, 'manufacturer_id');
+    }
 }

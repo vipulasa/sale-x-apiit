@@ -15,7 +15,9 @@ class VehicleModelController extends Controller
      */
     public function index()
     {
-        //
+        return view('vehicle-model.index', [
+            'vehicle_models' => VehicleModel::paginate(),
+        ]);
     }
 
     /**
