@@ -31,26 +31,18 @@
 
                             <div class="row mt-2">
                                 <div class="col-md-6">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                        id="password" name="password" />
-                                    <div id="passwordHelp" class="form-text">Password</div>
-                                    @error('password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                    <x-text-field field-id="password"
+                                                  label="Password"
+                                                  help-text="Password must be a minimum of 8 characters"
+                                                  type="password"
+                                                  :model="$user" />
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                    <input type="password"
-                                        class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation"
-                                        name="password_confirmation" />
-                                    @error('password_confirmation')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                    <x-text-field field-id="password_confirmation"
+                                                  label="Confirm Password"
+                                                  help-text="Please confirm the password"
+                                                  type="password"
+                                                  :model="$user" />
                                 </div>
                             </div>
 
