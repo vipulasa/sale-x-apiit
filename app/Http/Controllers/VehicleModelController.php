@@ -99,6 +99,13 @@ class VehicleModelController extends Controller
      */
     public function destroy(VehicleModel $vehicleModel)
     {
-        //
+
+        $vehicleModel->delete();
+
+         // set the success message to the session
+         session()->flash('success', 'Vehicle Model is deleted successfully');
+
+         // redirect to user page
+         return redirect()->route('vehicle-models.index');
     }
 }
