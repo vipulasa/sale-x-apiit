@@ -13,26 +13,18 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                    name="name" value="{{ old('name', $user->name) }}" />
-                                <div id="nameHelp" class="form-text">Your user name</div>
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <x-text-field field-id="name"
+                                                  label="Name"
+                                                  help-text="Your User Name"
+                                                  type="text"
+                                                  :model="$user" />
                             </div>
                             <div class="col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                    name="email" value="{{ old('email', $user->email) }}" />
-                                <div id="emailHelp" class="form-text">Email Address</div>
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <x-text-field field-id="email"
+                                                  label="Email"
+                                                  help-text="Email Address"
+                                                  type="email"
+                                                  :model="$user" />
                             </div>
                         </div>
 
