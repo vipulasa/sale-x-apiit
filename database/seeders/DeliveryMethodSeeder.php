@@ -14,6 +14,26 @@ class DeliveryMethodSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $deliveryMethods = [
+            [
+                'name' => 'Delivery',
+                'description' => 'Delivery',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Pickup',
+                'description' => 'Pickup',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Self Pickup',
+                'description' => 'Self Pickup',
+                'is_active' => true,
+            ]
+        ];
+
+        foreach ($deliveryMethods as $deliveryMethod) {
+            \App\Models\DeliveryMethod::create($deliveryMethod);
+        }
     }
 }
