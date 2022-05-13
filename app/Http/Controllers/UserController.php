@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -68,8 +69,22 @@ class UserController extends Controller
         // create the user
         $user = (new User())->create($validated);
 
+        // check if an avatar exists
+        if ($request->has('avatar')) {
+
+            // Save the file and get the path
+            $path = $request
+                ->file('avatar')
+                ->store('avatars/' . $user->id, 'public');
+
+            // update the user avatar
+            $user->update([
+                'avatar' => $path
+            ]);
+        }
+
         // set the success message to the session
-        session()->flash('success', 'User '. $user->email .' created successfully');
+        session()->flash('success', 'User ' . $user->email . ' created successfully');
 
         // redirect to user page
         return redirect()->route('users.index');
@@ -139,6 +154,25 @@ class UserController extends Controller
 
         // update user object
         $user->update($validated);
+
+        // check if an avatar exists
+        if ($request->has('avatar')) {
+
+            // check if the user already has an avatar and remove it
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Save the file and get the path
+            $path = $request
+                ->file('avatar')
+                ->store('avatars/' . $user->id, 'public');
+
+            // update the user avatar
+            $user->update([
+                'avatar' => $path
+            ]);
+        }
 
         // set the success message to the session
         session()->flash('success', 'User updated successfully');

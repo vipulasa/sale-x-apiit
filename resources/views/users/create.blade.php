@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="bg-white col p-4 rounded rounded-2 col-md-8">
-            <form class="row g-3" method="POST" action="{{ route('users.store') }}">
+            <form class="row g-3" method="POST" action="{{ route('users.store') }}"
+            enctype="multipart/form-data">
                 @csrf
 
                 <div class="card">
@@ -78,6 +79,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Personal Information</h5>
+
+                        <div class="row">
+                            <div class="col-md-12 pt-3">
+                                <label for="avatar" class="form-label">User Avatar</label>
+                                <input type="file" name="avatar" class="form-control" />
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-12 pt-3">

@@ -45,8 +45,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('mobile')->unique()->nullable();
 
-
-
+            $table->string('avatar')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

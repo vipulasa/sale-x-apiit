@@ -39,6 +39,8 @@ class User extends Authenticatable
         'county',       // LK
         'phone',
         'mobile',
+
+        'avatar' // URL to avatar image
     ];
 
     /**

@@ -20,6 +20,10 @@
                         </h5>
                         <p class="card-text">{{ $user->bio }}</p>
 
+                        @if ($user->avatar)
+                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="" style="width: 100px">
+                        @endif
+
                         <h5 class="mt-4">Personal Information</h5>
                         <ul class="list-group">
                             <li class="list-group-item">Title : {{ ucfirst($user->title) }}</li>
