@@ -34,12 +34,21 @@
 
                                         <h4>Rs. {{ number_format($product->price, 2) }}</h4>
 
-                                        <form action="" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary btn-lg mt-4">
-                                                Add To Cart
-                                            </button>
-                                        </form>
+                                        @auth
+                                            <form action="" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-lg mt-4">
+                                                    Add To Cart
+                                                </button>
+                                            </form>
+                                        @endauth
+
+                                        @guest
+                                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg mt-4">
+                                                Login to Buy
+                                            </a>
+                                        @endguest
+
                                     </div>
                                 </div>
                             </div>
