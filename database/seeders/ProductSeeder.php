@@ -25,6 +25,7 @@ class ProductSeeder extends Seeder
                 'is_active' => 1,
                 'is_featured' => 1,
                 'sort_order' => 0,
+                'image' => '/products/1/image.jpg'
             ],
 
             [
@@ -37,6 +38,7 @@ class ProductSeeder extends Seeder
                 'is_active' => 1,
                 'is_featured' => 1,
                 'sort_order' => 0,
+                'image' => '/products/2/image.jpg'
             ],
 
             [
@@ -49,6 +51,7 @@ class ProductSeeder extends Seeder
                 'is_active' => 1,
                 'is_featured' => 1,
                 'sort_order' => 0,
+                'image' => '/products/3/image.jpg'
             ]
         ];
 

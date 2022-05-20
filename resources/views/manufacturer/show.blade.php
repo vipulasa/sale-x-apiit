@@ -30,7 +30,16 @@
                             @endforeach
                         </ul>
 
-
+                        <h5>Vehicles</h5>
+                        <ul>
+                            @foreach ($manufacturer->vehicles as $vehicle)
+                                <li>
+                                    <a href="{{ route('vehicles.show', $vehicle->id) }}">
+                                        {{ $vehicle->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
