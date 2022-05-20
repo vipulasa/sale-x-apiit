@@ -16,7 +16,36 @@
                     eius perspiciatis porro recusandae, quisquam ea quidem harum deleniti perferendis at fugiat voluptate?
                     Dolore, esse. Totam, deserunt?
                 </p>
-                <button class="btn btn-primary btn-lg" type="button">Shop Now</button>
+
+                <div class="row">
+                    @if ($products && $products->count())
+                        @foreach ($products as $product)
+                            <div class="col-4">
+                                <div class="card mx-1">
+                                    @if ($product->image)
+                                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                                            alt="...">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {{ $product->name }}
+                                        </h5>
+                                        <p class="card-text">{{ $product->summary }}</p>
+
+                                        <h4>Rs. {{ number_format($product->price, 2) }}</h4>
+
+                                        <form action="" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-lg mt-4">
+                                                Add To Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </div>

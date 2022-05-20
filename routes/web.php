@@ -85,10 +85,4 @@ Route::resource('orders', App\Http\Controllers\OrderController::class)
     ]);
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/', function () {
-    // dd(auth()->check());
-
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
