@@ -25,12 +25,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        \App\Models\User::factory(50)->create();
+        \App\Models\User::factory(20)->create();
 
         $this->call([
             DeliveryMethodSeeder::class,
             ManufacturerSeeder::class,
             VehicleModelSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

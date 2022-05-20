@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+
 Route::resource('users', App\Http\Controllers\UserController::class)
     ->middleware([
         'auth',

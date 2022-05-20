@@ -103,6 +103,10 @@
                                 </ul>
                             </li>
                         @endcan
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact Us') }}</a>
+                        </li>
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
