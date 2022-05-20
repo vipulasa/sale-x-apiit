@@ -50,6 +50,10 @@ Route::resource('vehicles', App\Http\Controllers\ProductController::class)
         'admin',
     ]);
 
+Route::get('vehicle/{id}', [
+    App\Http\Controllers\ProductController::class, 'show'
+])->name('vehicle.show');
+
 Route::resource('spareparts', App\Http\Controllers\SparepartController::class)
     ->middleware([
         'auth',

@@ -2,13 +2,16 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-4 mb-4">
-                    Back
-                </a>
+        @can('accessAdminFeatures')
+            <div class="row">
+                <div class="col">
+                    <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-4 mb-4">
+                        Back
+                    </a>
+                </div>
             </div>
-        </div>
+        @endcan
+
         <div class="row">
             <div class="bg-white col p-4 rounded rounded-2 col-md-8">
                 <div class="card">
