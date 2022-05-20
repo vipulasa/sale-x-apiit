@@ -84,5 +84,10 @@ Route::resource('orders', App\Http\Controllers\OrderController::class)
         'admin',
     ]);
 
+Route::resource('cart', App\Http\Controllers\CartController::class)
+    ->middleware([
+        'auth'
+    ]);
+
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

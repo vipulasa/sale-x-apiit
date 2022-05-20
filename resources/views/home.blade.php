@@ -32,11 +32,13 @@
                                         </h5>
                                         <p class="card-text">{{ $product->summary }}</p>
 
-                                        <h4>Rs. {{ number_format($product->price, 2) }}</h4>
+                                        <h4>USD. {{ number_format($product->price, 2) }}</h4>
 
                                         @auth
-                                            <form action="" method="POST">
+                                            <form action="{{ route('cart.store') }}" method="POST">
                                                 @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="number" name="quantity" value="1" />
                                                 <button type="submit" class="btn btn-primary btn-lg mt-4">
                                                     Add To Cart
                                                 </button>
