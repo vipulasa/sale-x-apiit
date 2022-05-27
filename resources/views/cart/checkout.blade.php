@@ -7,49 +7,91 @@
         </div>
 
         <div class="container">
+
             <div class="row">
                 <div class="col-md-4 order-md-2 mb-4">
+
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted">Promotions</span>
+                        <span class="badge badge-secondary badge-pill">3</span>
+                    </h4>
+
+                    <form method="post" action="{{ route('cart.order.update', [$cart->id, $order->id]) }}">
+                        <div class="col-md-12">
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger">
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
+
+                            @if (session()->has('promotion_success'))
+                                <div class="alert alert-success">
+                                    {{ session()->get('promotion_success') }}
+                                </div>
+                            @endif
+                        </div>
+                        @csrf
+                        <ul class="list-group mb-3">
+                            @foreach ($promotions as $promotion)
+                                <li class="list-group-item d-flex justify-content-between lh-condensed {{ $order->promotion_id == $promotion->id ? 'bg-warning' : '' }}">
+                                    <div>
+                                        <h6 class="my-0">{{ $promotion->name }}</h6>
+                                        <small class="text-muted">{{ $promotion->description }}</small>
+                                    </div>
+                                    <button type="submit" name="promotion_id" value="{{ $promotion->id }}"
+                                        class="btn btn-sm btn-info text-white">Apply</button>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </form>
+
+                    <h4 class="d-flex justify-content-between align-items-center mb-3 mt-4">
                         <span class="text-muted">Your cart</span>
                         <span class="badge badge-secondary badge-pill">3</span>
                     </h4>
+
                     <ul class="list-group mb-3">
                         @if ($cart->products && $cart->products->count())
                             @foreach ($cart->products as $product)
                                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                                     <div>
                                         <h6 class="my-0">{{ $product->name }}</h6>
-                                        <small class="text-muted">{{  Str::limit($product->summary, 30) }}</small>
+                                        <small class="text-muted">{{ Str::limit($product->summary, 30) }}</small>
                                     </div>
                                     <span class="text-muted">${{ number_format($product->pivot->price, 2) }}</span>
                                 </li>
                             @endforeach
                         @endif
+
+                        @if ($order->discount)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Sub Total (USD)</span>
+                                <strong>${{ number_format($cart->total, 2) }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Discount (USD)</span>
+                                <strong>${{ number_format($order->discount, 2) }}</strong>
+                            </li>
+                        @endif
+
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (USD)</span>
-                            <strong>${{ number_format($cart->total, 2) }}</strong>
+                            <strong>${{ number_format($order->total, 2) }}</strong>
                         </li>
                     </ul>
 
-                    <form class="card p-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-secondary">Redeem</button>
-                            </div>
-                        </div>
-                    </form>
+
                 </div>
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Customer Information</h4>
-                    <form class="bg-white p-4 rounded border" method="POST" action="{{ route('cart.thank-you', $cart->id) }}">
-                    @csrf
+                    <form class="bg-white p-4 rounded border" method="POST"
+                        action="{{ route('cart.thank-you', $cart->id) }}">
+                        @csrf
 
                         <div class="row">
                             <div class="col-md-12 pt-3">
                                 <label for="title" class="form-label">Title</label>
-                                <select class="form-select @error('title') is-invalid @enderror" id="title"
-                                    name="title">
+                                <select class="form-select @error('title') is-invalid @enderror" id="title" name="title">
                                     <option value="">Select</option>
                                     @foreach (['mr', 'mrs', 'miss', 'dr', 'prof', 'etc'] as $title)
                                         <option value="{{ $title }}"
@@ -185,8 +227,7 @@
                             <div class="col-6">
                                 <label for="mobile" class="form-label">Mobile</label>
                                 <input type="text" value="{{ old('mobile', $user->mobile) }}"
-                                    class="form-control @error('mobile') is-invalid @enderror" id="mobile"
-                                    name="mobile" />
+                                    class="form-control @error('mobile') is-invalid @enderror" id="mobile" name="mobile" />
                                 <div id="mobileHelp" class="form-text"></div>
                                 @error('mobile')
                                     <div class="invalid-feedback">
@@ -202,11 +243,11 @@
 
                         <div class="d-block my-3">
                             <div class="custom-control custom-radio">
-                                <input id="credit" type="radio" class="custom-control-input" checked
-                                    required>
+                                <input id="credit" type="radio" class="custom-control-input" checked required>
                                 <label class="custom-control-label" for="credit">Credit card</label>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="cc-name">Name on card</label>
@@ -224,6 +265,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">Expiration</label>
@@ -240,6 +282,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <hr class="mb-4">
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Complete Order</button>
                     </form>

@@ -31,8 +31,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/images/logo.png') }}"
-                        style="width: 150px;"
+                    <img src="{{ asset('/images/logo.png') }}" style="width: 150px;"
                         alt="{{ config('app.name', 'Laravel') }}">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -53,16 +52,23 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                     <li class="text-black-50 ps-3">Authentication</li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                                     </li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li class="text-black-50 ps-3">Product</li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('manufacturers.index') }}">Manufacturers</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('manufacturers.index') }}">Manufacturers</a>
                                     </li>
 
                                     <li>
@@ -81,9 +87,13 @@
                                         <a class="dropdown-item" href="{{ route('spareparts.index') }}">Spareparts</a>
                                     </li>
 
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li class="text-black-50 ps-3">E-Commerce</li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
 
                                     <li>
                                         <a class="dropdown-item" href="{{ route('promotions.index') }}">Promotions</a>
@@ -94,7 +104,8 @@
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('delivery-methods.index') }}">Delivery Methods</a>
+                                        <a class="dropdown-item" href="{{ route('delivery-methods.index') }}">Delivery
+                                            Methods</a>
                                     </li>
 
                                     <li>
@@ -110,6 +121,17 @@
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
+
+                        @if (session('cart_id'))
+                            <li>
+                                <a class="nav-link" href="{{ route('cart.show', session()->get('cart_id')) }}">
+                                    <i class="ri-shopping-cart-line"></i> My Cart
+                                    <span class="badge badge-pill badge-danger"></span>
+                                </a>
+                            </li>
+                        @endif
+
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -133,7 +155,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

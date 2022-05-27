@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,11 @@ class CartController extends Controller
         foreach ($cart->products as $product) {
             $cart->total += $product->pivot->total;
         }
+
         $cart->save();
+
+        // put the cart ID to the session so that it can be accessible in the view
+        session()->put('cart_id', $cart->id);
 
         return redirect()->route('cart.show', $cart->id);
     }
@@ -102,10 +107,142 @@ class CartController extends Controller
             abort(403, 'Sorry, this cart does not belong to you.');
         }
 
+        // create an order for the cart
+        $order = Order::where('cart_id', $cart->id)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        // if the order does not exist, create one
+        if (!$order) {
+            $order = Order::create([
+                'cart_id' => $cart->id,
+                'user_id' => $request->user()->id,
+                'status' => 'pending',
+                'payment_status' => 'pending',
+                'total' => $cart->total,
+            ]);
+        }
+
+        // create an instance of the promotion and check if this promotion is applicable to the cart
+        $promotion = (new \App\Models\Promotion())->find($order->promotion_id);
+
+        if ($promotion) {
+            // check for the promotion type
+            if ($promotion->type == 'number_of_items_validation') {
+
+                // count all the products in the cart
+                $count = 0;
+                foreach ($cart->products as $product) {
+                    $count += $product->pivot->quantity;
+                }
+
+                // check if the promotion has a value and that is equal to the number of items in the cart
+                if ($promotion->value == $count) {
+
+                    // attach the promotion ID to the order
+                    $order->promotion_id = $promotion->id;
+
+                    // check for the promotion price type and calculate the total
+                    if ($promotion->price_type == 'fixed') {
+
+                        $order->total = $cart->total - $promotion->price_value;
+
+                        $order->discount = $cart->total - $order->total;
+                    } else if ($promotion->price_type == 'percentage') {
+
+                        $order->total = $cart->total - ($cart->total * $promotion->price_value / 100);
+
+                        $order->discount = $cart->total - $order->total;
+                    }
+
+                    // save the order
+                    $order->save();
+
+                    session()->flash('promotion_success', 'Promotion applied successfully.');
+                } else {
+
+                    $order->total = $cart->total;
+
+                    $order->discount = 0;
+
+                    $order->promotion_id = null;
+
+                    $order->save();
+
+                    session()->flash('error', 'Sorry, this promotion is not applicable to your cart.');
+                }
+            }
+        }
+
+        // get all active promotions in the system
+        $promotions = \App\Models\Promotion::where('is_active', true)->get();
+
         return view('cart.checkout', [
             'cart' => $cart,
-            'user' => $request->user() // auth()->user()
+            'user' => $request->user(),
+            'promotions' => $promotions,
+            'order' => $order
         ]);
+    }
+
+    public function updateOrder(Request $request, Cart $cart, Order $order)
+    {
+        // check if the request has a promotion id
+        $request->validate([
+            'promotion_id' => 'required|numeric|exists:promotions,id',
+        ]);
+
+        // create an instance of the promotion and check if this promotion is applicable to the cart
+        $promotion = (new \App\Models\Promotion())->findOrFail($request->promotion_id);
+
+        // check for the promotion type
+        if ($promotion->type == 'number_of_items_validation') {
+
+            // count all the products in the cart
+            $count = 0;
+            foreach ($cart->products as $product) {
+                $count += $product->pivot->quantity;
+            }
+
+            // check if the promotion has a value and that is equal to the number of items in the cart
+            if ($promotion->value == $count) {
+
+                // attach the promotion ID to the order
+                $order->promotion_id = $promotion->id;
+
+                // check for the promotion price type and calculate the total
+                if ($promotion->price_type == 'fixed') {
+
+                    $order->total = $cart->total - $promotion->price_value;
+
+                    $order->discount = $cart->total - $order->total;
+                } else if ($promotion->price_type == 'percentage') {
+
+                    $order->total = $cart->total - ($cart->total * $promotion->price_value / 100);
+
+                    $order->discount = $cart->total - $order->total;
+                }
+
+                // save the order
+                $order->save();
+
+                session()->flash('promotion_success', 'Promotion applied successfully.');
+            } else {
+
+                $order->total = $cart->total;
+
+                $order->discount = 0;
+
+                $order->promotion_id = null;
+
+                $order->save();
+
+                session()->flash('error', 'Sorry, this promotion is not applicable to your cart.');
+            }
+        }
+
+        // redirect to the checkout page
+        return redirect()->route('cart.checkout', $cart->id);
     }
 
     /**
@@ -198,6 +335,14 @@ class CartController extends Controller
     public function destroy(Request $request, Cart $cart)
     {
         $cart->products()->detach($request->product_id);
+
+        // loop through the products in the cart and calculate the total
+        $cart->total = 0;
+        foreach ($cart->products as $product) {
+            $cart->total += $product->pivot->total;
+        }
+
+        $cart->save();
 
         return redirect()->route('cart.show', $cart->id);
     }

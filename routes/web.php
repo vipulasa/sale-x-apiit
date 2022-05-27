@@ -90,6 +90,12 @@ Route::get('/cart/{cart}/checkout', [App\Http\Controllers\CartController::class,
     ])
     ->name('cart.checkout');
 
+Route::post('/cart/{cart}/{order}/update', [App\Http\Controllers\CartController::class, 'updateOrder'])
+    ->middleware([
+        'auth'
+    ])
+    ->name('cart.order.update');
+
 Route::post('/cart/{cart}/thank-you', [App\Http\Controllers\CartController::class, 'completeCheckout'])
     ->middleware([
         'auth'

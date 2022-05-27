@@ -35,6 +35,16 @@ class PromotionSeeder extends Seeder
                 'description' => 'Get 1 free when you buy 2 items',
                 'is_active' => 1,
             ],
+            [
+                'name' => 'Buy 2 Get $1000 off',
+                'code' => 'B21000OFF',
+                'type' => 'number_of_items_validation',
+                'value' => 2,
+                'price_type' => 'fixed',
+                'price_value' => '1000',
+                'description' => 'When you buy 2 items, get $1000 off',
+                'is_active' => 1,
+            ],
         ];
 
         foreach ($promotions as $promotion) {
