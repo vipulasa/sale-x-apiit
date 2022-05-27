@@ -15,7 +15,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('order.index', [
+            'orders' => Order::orderBy('created_at', 'ASC')->paginate(20)
+        ]);
     }
 
     /**

@@ -158,7 +158,7 @@ class CartController extends Controller
                     // save the order
                     $order->save();
 
-                    session()->flash('promotion_success', 'Promotion applied successfully.');
+                    session()->flash('promotion_success', $promotion->name . ' applied successfully.');
                 } else {
 
                     $order->total = $cart->total;
@@ -169,7 +169,7 @@ class CartController extends Controller
 
                     $order->save();
 
-                    session()->flash('error', 'Sorry, this promotion is not applicable to your cart.');
+                    session()->flash('error', 'Sorry, ' . $promotion->name . ' promotion is not applicable to your cart.');
                 }
             }
         }
@@ -226,7 +226,7 @@ class CartController extends Controller
                 // save the order
                 $order->save();
 
-                session()->flash('promotion_success', 'Promotion applied successfully.');
+                session()->flash('promotion_success', $promotion->name . ' applied successfully.');
             } else {
 
                 $order->total = $cart->total;
@@ -237,7 +237,7 @@ class CartController extends Controller
 
                 $order->save();
 
-                session()->flash('error', 'Sorry, this promotion is not applicable to your cart.');
+                session()->flash('error', 'Sorry, ' . $promotion->name . ' promotion is not applicable to your cart.');
             }
         }
 
@@ -251,7 +251,7 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function completeCheckout(Request $request, Cart $cart)
+    public function completeCheckout(Request $request, Cart $cart, Order $order)
     {
 
         // validate the request
@@ -276,10 +276,26 @@ class CartController extends Controller
         // update the user with the validated data
         $user->update($validated);
 
+        // update the order with the validated data
+        $order->update([
+            'status' => 'processing',
+            'payment_status' => 'paid',
+            'address_1' => $validated['address_1'],
+            'address_2' => $validated['address_2'],
+            'city' => $validated['city'],
+            'postcode' => $validated['postcode'],
+            'county' => $validated['county'],
+            'phone' => $validated['phone'],
+            'mobile' => $validated['mobile'],
+        ]);
+
         // update the cart and set the payment status to true
         $cart->update([
             'is_paid' => true
         ]);
+
+        // remove the cart id from the session
+        session()->forget('cart_id');
 
         return view('cart.thank-you', [
             'cart' => $cart

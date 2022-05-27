@@ -85,7 +85,7 @@
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Customer Information</h4>
                     <form class="bg-white p-4 rounded border" method="POST"
-                        action="{{ route('cart.thank-you', $cart->id) }}">
+                        action="{{ route('cart.thank-you', [$cart->id, $order->id]) }}">
                         @csrf
 
                         <div class="row">
