@@ -11,26 +11,6 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreCartRequest  $request
@@ -93,14 +73,53 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Checkout
      *
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cart $cart)
+    public function checkout(Request $request, Cart $cart)
     {
-        //
+        return view('cart.checkout', [
+            'cart' => $cart,
+            'user' => $request->user() // auth()->user()
+        ]);
+    }
+
+    /**
+     * Complete payment and checkout
+     *
+     * @param  \App\Models\Cart  $cart
+     * @return \Illuminate\Http\Response
+     */
+    public function completeCheckout(Request $request, Cart $cart)
+    {
+
+        // validate the request
+        $validated = $request->validate([
+            "title" => "required",
+            "first_name" => "required|string|max:255",
+            "last_name" => "required|string|max:255",
+            "gender" => "required",
+            "birthday" => "nullable",
+            "address_1" => "required|string",
+            "address_2" => "nullable",
+            "city" => "required|string|max:255",
+            "postcode" => "required|string|max:255",
+            "county" => "required|string|max:255",
+            "phone" => "nullable",
+            "mobile" => "required|string|max:255"
+        ]);
+
+        // get the user from the request
+        $user = $request->user();
+
+        // update the user with the validated data
+        $user->update($validated);
+
+        return view('cart.thank-you', [
+            'cart' => $cart
+        ]);
     }
 
     /**

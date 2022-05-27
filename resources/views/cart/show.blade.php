@@ -71,14 +71,19 @@
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>
+                                    <td colspan="3" class="text-end">
                                         <h3>Total</h3>
                                     </td>
-                                    <td class="text-right">
+                                    <td class="text-end" colspan="2">
                                         <h3><strong>$ {{ number_format($cart->total, 2) }}</strong></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-end">
+                                        <a href="{{  route('cart.checkout', $cart->id) }}"
+                                            class="btn btn-success btn-lg">
+                                            Checkout
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

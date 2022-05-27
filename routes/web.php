@@ -84,6 +84,18 @@ Route::resource('orders', App\Http\Controllers\OrderController::class)
         'admin',
     ]);
 
+Route::get('/cart/{cart}/checkout', [App\Http\Controllers\CartController::class, 'checkout'])
+    ->middleware([
+        'auth'
+    ])
+    ->name('cart.checkout');
+
+Route::post('/cart/{cart}/thank-you', [App\Http\Controllers\CartController::class, 'completeCheckout'])
+    ->middleware([
+        'auth'
+    ])
+    ->name('cart.thank-you');
+
 Route::resource('cart', App\Http\Controllers\CartController::class)
     ->middleware([
         'auth'
