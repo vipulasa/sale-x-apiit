@@ -27,6 +27,7 @@ class Cart extends Model
                 'quantity',
                 'price',
                 'total',
+                'addons',
             ]);
     }
 }

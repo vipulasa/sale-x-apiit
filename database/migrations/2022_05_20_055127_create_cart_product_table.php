@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->float('price');
             $table->float('total', 10, 2);
+            $table->json('addons')->nullable();
         });
     }
 

@@ -32,6 +32,19 @@
                                                     <h4 class="media-heading"><a href="#">{{ $product->name }}</a></h4>
                                                     <h5 class="media-heading"> by <a
                                                             href="#">{{ $product->manufacturer->name }}</a></h5>
+
+                                                    @if ($product->pivot->addons)
+                                                        Product Addons
+                                                        <ul>
+                                                            @foreach (json_decode($product->pivot->addons) as $addon)
+                                                                <li>
+                                                                    {{ \App\Models\VehicleAddon::find($addon)->name }}
+                                                                    $ {{ number_format(\App\Models\VehicleAddon::find($addon)->value, 2) }}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+
                                                     <span>Status: </span>
                                                     <span class="text-success">
                                                         <strong>In Stock</strong>
@@ -46,7 +59,7 @@
                                                 @method('PUT')
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                                 <input type="number" class="form-control" name="quantity"
-                                                value="{{ $product->pivot->quantity }}">
+                                                    value="{{ $product->pivot->quantity }}">
                                                 <button type="submit" class="btn btn-sm btn-info">
                                                     <span class="glyphicon glyphicon-remove"></span> Update
                                                 </button>
@@ -80,8 +93,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-end">
-                                        <a href="{{  route('cart.checkout', $cart->id) }}"
-                                            class="btn btn-success btn-lg">
+                                        <a href="{{ route('cart.checkout', $cart->id) }}" class="btn btn-success btn-lg">
                                             Checkout
                                         </a>
                                     </td>

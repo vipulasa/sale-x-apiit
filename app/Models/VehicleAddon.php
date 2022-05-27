@@ -20,6 +20,15 @@ class VehicleAddon extends Model
         'name',
         'description',
         'image',
+        'value',
         'is_active'
     ];
+
+    public function manufacturer(){
+        return $this->belongsTo(Manufacturer::class);
+    }
+
+    public function vehicleModel(){
+        return $this->belongsTo(VehicleModel::class);
+    }
 }

@@ -33,6 +33,8 @@ return new class extends Migration
 
             $table->string('image')->nullable(); // varchar 255
 
+            $table->float('value', 10, 2)->nullable();
+
             $table->boolean('is_active')->default(true); // tinyint 2 - 0 or 1
 
             $table->timestamps();

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\VehicleAddon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -45,12 +46,23 @@ class CartController extends Controller
         // check if the product is already in the cart and remove
         $cart->products()->detach($product->id);
 
+        // calculate product total
+        $product_total = $product->price * $validated['quantity'];
+
+        // check if there are any addons and add them to the product total
+        if ($request->vehicle_addons) {
+            foreach ($request->vehicle_addons as $addon) {
+                $product_total += (new VehicleAddon())->findOrFail($addon)->value;
+            }
+        }
+
         // add the product to the cart
         $cart->products()->attach([
             $product->id => [
                 'quantity' => $validated['quantity'],
                 'price' => $product->price,
-                'total' => $product->price * $validated['quantity'],
+                'total' => $product_total,
+                'addons' => $request->vehicle_addons ? json_encode($request->vehicle_addons) : null,
             ]
         ]);
 
@@ -59,7 +71,6 @@ class CartController extends Controller
         foreach ($cart->products as $product) {
             $cart->total += $product->pivot->total;
         }
-
         $cart->save();
 
         // put the cart ID to the session so that it can be accessible in the view

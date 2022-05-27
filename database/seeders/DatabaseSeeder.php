@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             ManufacturerSeeder::class,
             VehicleModelSeeder::class,
             ProductSeeder::class,
-            PromotionSeeder::class
+            PromotionSeeder::class,
+            VehicleAddonSeeder::class
         ]);
     }
 }
