@@ -28,7 +28,9 @@ class CartController extends Controller
         $product = (new Product())->findOrFail($validated['product_id']);
 
         // check if a cart exists for this authenticated user
-        $cart = Cart::where('user_id', auth()->id())->first();
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('is_paid', false)
+            ->first();
 
         // if the authenticated user has no cart, create one
         if (!$cart) {
@@ -67,8 +69,18 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
+    public function show(Request $request, Cart $cart)
     {
+        // check if the cart is paid and redirect to the home page
+        if ($cart->is_paid) {
+            return redirect()->route('home');
+        }
+
+        // check if the cart belongs to the authenticated user
+        if ($cart->user_id !== $request->user()->id) {
+            abort(403, 'Sorry, this cart does not belong to you.');
+        }
+
         return view('cart.show', compact('cart'));
     }
 
@@ -80,6 +92,16 @@ class CartController extends Controller
      */
     public function checkout(Request $request, Cart $cart)
     {
+        // check if the cart is paid and redirect to the home page
+        if ($cart->is_paid) {
+            return redirect()->route('home');
+        }
+
+        // check if the cart belongs to the authenticated user
+        if ($cart->user_id !== $request->user()->id) {
+            abort(403, 'Sorry, this cart does not belong to you.');
+        }
+
         return view('cart.checkout', [
             'cart' => $cart,
             'user' => $request->user() // auth()->user()
@@ -117,6 +139,11 @@ class CartController extends Controller
         // update the user with the validated data
         $user->update($validated);
 
+        // update the cart and set the payment status to true
+        $cart->update([
+            'is_paid' => true
+        ]);
+
         return view('cart.thank-you', [
             'cart' => $cart
         ]);
@@ -131,8 +158,8 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-         // validate the request
-         $validated = $request->validate([
+        // validate the request
+        $validated = $request->validate([
             'product_id' => 'required',
             'quantity' => 'required|numeric|min:1',
         ]);
