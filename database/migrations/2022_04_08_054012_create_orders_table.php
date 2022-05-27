@@ -15,6 +15,34 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
+            $table->bigInteger('cart_id')->unsigned();
+            $table->foreign('cart_id')->references('id')->on('carts');
+
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->bigInteger('promotion_id')->unsigned()->nullable();
+
+            $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled']);
+
+            $table->enum('payment_status', ['pending', 'paid', 'failed']);
+
+             // Address
+             $table->text('address_1')->nullable();
+             $table->text('address_2')->nullable();
+
+             $table->string('city')->nullable();
+             $table->string('postcode')->nullable();
+             $table->string('county')->default('LK')->nullable();
+
+             $table->string('phone')->nullable();
+             $table->string('mobile')->unique()->nullable();
+
+             $table->float('discount', 10, 2)->nullable();
+
+             $table->float('total', 10, 2)->nullable();
+
             $table->timestamps();
         });
     }

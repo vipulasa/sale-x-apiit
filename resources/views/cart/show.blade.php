@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="p-5 mb-4 bg-light rounded-3">
-            <h1>My Cart</h1>
+            <h1>My Cart - #{{ $cart->id }}</h1>
         </div>
 
         <div class="container">
@@ -94,6 +94,5 @@
                 @endif
             </div>
         </div>
-
     </div>
 @endsection
